@@ -5,7 +5,9 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
-
+const fs = require('fs')
+const path = require('path')
+const morgan = require('koa-morgan')
 // 引用路由
 const index = require('./routes/index')
 const commend = require('./routes/commend')
@@ -25,10 +27,13 @@ app.use(views(__dirname + '/views', {
   extension: 'pug'
 }))
 
-// logger 项目日志
+// logger 项目日志 使用koa-morgan
 app.use(async (ctx, next) => {
   await next()
 })
+const logFile = path.join(__dirname, 'logs', 'access.log')
+const accessLogStream = fs.createWriteStream(logFile, { flags: 'a' })
+app.use(morgan('combined', { stream: accessLogStream }))
 
 // routes
 app.use(index.routes(), index.allowedMethods())

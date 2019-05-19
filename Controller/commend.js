@@ -21,8 +21,8 @@ const major = async function (majorName, area) {
 }
 
 // 学校推荐
-const school = async function (type,province,score,target_province,rate) {
-  // let sql =  `select * from school_recommend where type=`
+const school = async function (target_province,rate) {
+  let sql =  `select * from school_recommend where target_province=${target_province} and rate=${rate}`
   console.log(sql)
   return await exec(sql)
 }
