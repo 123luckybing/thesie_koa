@@ -11,6 +11,7 @@ const morgan = require('koa-morgan')
 // 引用路由
 const index = require('./routes/index')
 const commend = require('./routes/commend')
+const addData = require('./routes/addData')
 
 // error handler
 onerror(app)
@@ -38,6 +39,7 @@ app.use(morgan('combined', { stream: accessLogStream }))
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(commend.routes(), commend.allowedMethods())
+app.use(addData.routes(), addData.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
